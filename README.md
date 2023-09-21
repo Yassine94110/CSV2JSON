@@ -7,4 +7,6 @@
 `yarn test`
 
 ## Execute script
-`node main.js`
+`yarn main`
+
+

@@ -22,11 +22,67 @@
  * 8 - Create a JSON file "employeeBySkill.json" with transformed results (3 min)
  * 9 - ADVANCED: "Done!" log must be the last message shown (NB: add log to watch order execution function)
  */
-const EMPLOYEES_FILENAME = "employees.csv";
-const EMPLOYEES_BY_SKILL_FILENAME = "employeesBySkill.json";
-
-/**
- * Your code here !
- */
-
-console.log("Done!");
+ const {
+    parseCSVFile,
+    filterEmployeesOver40,
+    enrichEmployees,
+    filterEmployeesBySkill,
+    generateJsonFileBySkill,
+    filterEmployeesUnder30,
+  } = require("./modules/index");
+  const EMPLOYEES_FILENAME = "employees.csv";
+  const EMPLOYEES_BY_SKILL_FILENAME = "employeesBySkill.json";
+  
+  const readline = require("readline");
+  
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  
+  const waitForEnter = () => {
+    return new Promise((resolve) => {
+      rl.question("Press Enter to continue...", () => {
+        resolve();
+      });
+    });
+  };
+  
+  (async () => {
+    try {
+      console.clear(); 
+      console.log("Step 3: Parsing CSV file and transforming data...");
+      await parseCSVFile(EMPLOYEES_FILENAME);
+      await waitForEnter();
+  
+      console.clear(); 
+      console.log("Step 5.1: Filtering employees over 40...");
+      await filterEmployeesOver40(EMPLOYEES_FILENAME);
+      await waitForEnter();
+  
+      console.clear();
+      console.log("Step 5.2: Filtering employees under 30...");
+      await filterEmployeesUnder30(EMPLOYEES_FILENAME);
+      await waitForEnter();
+  
+      console.clear();
+      console.log("Step 6: Enriching employees with the isSenior property...");
+      await enrichEmployees(EMPLOYEES_FILENAME);
+      await waitForEnter();
+  
+      console.clear();
+      console.log("Step 7: Grouping employees by skills...");
+      await filterEmployeesBySkill(EMPLOYEES_FILENAME);
+      await waitForEnter();
+  
+      console.clear();
+      console.log("Step 8: Generating JSON file in employeeBySkill.json...");
+      await generateJsonFileBySkill(EMPLOYEES_FILENAME);
+  
+      console.log("Done!");
+      rl.close();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  })();
+  

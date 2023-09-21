@@ -4,11 +4,15 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "main": "node main.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "jest": "^26.4.1"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0"
   }
 }
